@@ -1,0 +1,6 @@
+{
+  "name": "SportScan AI",
+  "description": "AI-powered sports talent assessment and athlete discovery platform.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
