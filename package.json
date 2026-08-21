@@ -1,15 +1,41 @@
-"dependencies": {
-  "@google/genai": "^2.4.0"
-  "@tailwindcss/vite": "^4.1.14"
-  "@types/canvas-confetti": "^1.9.0"
-  "@vitejs/plugin-react": "^5.0.4"
-  "canvas-confetti": "^1.9.4"
-  "dotenv": "^17.2.3"
-  "express": "^4.21.2"
-  "firebase": "^12.17.1"
-  "lucide-react": "^0.546.0"
-  "motion": "^12.23.24"
-  "react": "^19.0.1"
-  "react-dom": "^19.0.1"
-  "recharts": "^3.10.1"
+"scripts": {
+  "dev": "tsx server.ts",
+  "build": "vite build",
+  "build:server": "esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
+  "start": "node dist/server.cjs",
+  "preview": "vite preview",
+  "lint": "tsc --noEmit"
+}
+```[cite: 1]
+
+**2. Configure Vercel Routing (`vercel.json`)**
+If you want Vercel to route requests to your Express app, add a `vercel.json` file in your root directory:
+
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.ts",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.ts"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
